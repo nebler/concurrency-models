@@ -113,6 +113,27 @@ func (ft Future) first(ft2 Future) Future {
 	})
 }
 
+func (fts Futures) first() Future {
+	return future(func() (interface{}, bool) {
+		var v interface{}
+		var o bool
+		agg := make(chan Future)
+		for _, ch := range fts {
+			go func(ft Future) {
+				agg <- ft
+			}(ch)
+		}
+
+		select {
+		case ft := <-agg:
+			x := <-ft
+			v = x.val
+			o = x.status
+		}
+		return v, o
+	})
+}
+
 // Pick first successful future
 func (ft Future) firstSucc(ft2 Future) Future {
 
@@ -217,11 +238,14 @@ func main() {
 	welt := getSite("http://www.welt.com")
 
 	fts := Futures{spiegel, stern, welt}
-	fts.mapsOn(func(result interface{}) {
-		response := result.(*http.Response)
-		printResponse(response)
-	})
-	fmt.Print(fts.getAll())
+	/*
+		fts.mapsOn(func(result interface{}) {
+			response := result.(*http.Response)
+			printResponse(response)
+		})*/
+	fut := fts.first()
 	fmt.Printf("do something else \n")
+	v, _ := fut.get()
+	printResponse(v.(*http.Response))
 	time.Sleep(2 * time.Second)
 }
