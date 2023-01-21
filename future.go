@@ -113,6 +113,7 @@ func (ft Future) first(ft2 Future) Future {
 	})
 }
 
+
 func (fts Futures) first() Future {
 	return future(func() (interface{}, bool) {
 		var v interface{}
