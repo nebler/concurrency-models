@@ -200,5 +200,7 @@ func ex3() {
 
 func main() {
 
+	ex3()
+
 	example2()
 }
