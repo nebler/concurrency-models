@@ -202,6 +202,7 @@ func main() {
 
 	ex3()
 	//todo
+	// make another example?
 	ex4()
 	example2()
 }
