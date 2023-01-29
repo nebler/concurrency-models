@@ -203,6 +203,7 @@ func main() {
 	ex3()
 	//todo
 	// make another example?
+	//or just dont do it?
 	ex4()
 	example2()
 }
