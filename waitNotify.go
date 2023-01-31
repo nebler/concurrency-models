@@ -49,6 +49,7 @@ func (g Group) notifyAll() {
 }
 
 // Sleeping barber example making use of wait/notify
+// gucjonqwc
 func sleepingBarber() {
 	g := newGroup()
 
